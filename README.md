@@ -11,8 +11,6 @@ public static bool TryDataParsing(string pathToFile, out Dictionary<string, byte
     fieldAddresObject = new Dictionary<string, byte>();
     listAddresObjectFIAS = new List<List<(byte, string)>>();
 
-    int count = 0;
-
     try
     {
         using (XmlReader reader = XmlReader.Create(new FileStream(pathToFile, FileMode.Open)))
@@ -32,19 +30,16 @@ public static bool TryDataParsing(string pathToFile, out Dictionary<string, byte
                     }
 
                     listAddresObjectFIAS.Add(addressObject);
-
-                    count = listAddresObjectFIAS.Count;
                 }
             }
-            fieldAddresObject = null;
-            listAddresObjectFIAS = null;
         }
     }
     catch
     {
         return false;
     }
-    Console.WriteLine(count);
+
+    listAddresObjectFIAS.TrimExcess();
     return true;
 }
 ``` 
