@@ -17,7 +17,6 @@ namespace TestTask2
             fieldAddresObject = new Dictionary<string, byte>();
             listAddresObjectFIAS = new List<List<(byte, string)>>();
 
-            int count = 0;
 
             try
             {
@@ -34,23 +33,18 @@ namespace TestTask2
                                 if (!fieldAddresObject.ContainsKey(reader.Name))
                                     fieldAddresObject.Add(reader.Name, (byte)fieldAddresObject.Values.Count);
 
-                                addressObject.Add((fieldAddresObject[reader.Name] ,reader.Value));
+                                addressObject.Add((fieldAddresObject[reader.Name], reader.Value));
                             }
 
                             listAddresObjectFIAS.Add(addressObject);
-
-                            count = listAddresObjectFIAS.Count;
                         }
                     }
-                    fieldAddresObject = null;
-                    listAddresObjectFIAS = null;
                 }
             }
             catch
             {
                 return false;
             }
-            Console.WriteLine(count);
             return true;
         }
 
@@ -61,7 +55,7 @@ namespace TestTask2
 
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-            
+
 
             bool res = TryDataParsing(pathToFile, out _, out _);
 
@@ -74,7 +68,6 @@ namespace TestTask2
             Console.WriteLine($"Прошло времени: { stopwatch.ElapsedMilliseconds} миллисекунд");
 
             Console.ReadKey();
-
         }
     }
 }
