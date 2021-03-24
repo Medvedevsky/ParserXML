@@ -25,22 +25,25 @@ namespace TestTask2
                 {
                     while (reader.Read())
                     {
-                        var addressObject = new List<(byte, string)>();
-
                         if (reader.NodeType == XmlNodeType.Element && reader.HasAttributes)
                         {
+                            var addressObject = new List<(byte, string)>(fieldAddresObject.Count);
+
                             while (reader.MoveToNextAttribute())
                             {
                                 if (!fieldAddresObject.ContainsKey(reader.Name))
                                     fieldAddresObject.Add(reader.Name, (byte)fieldAddresObject.Values.Count);
 
-                                addressObject.Add((fieldAddresObject[reader.Name], reader.Value));
+                                addressObject.Add((fieldAddresObject[reader.Name] ,reader.Value));
                             }
 
                             listAddresObjectFIAS.Add(addressObject);
+
                             count = listAddresObjectFIAS.Count;
                         }
                     }
+                    fieldAddresObject = null;
+                    listAddresObjectFIAS = null;
                 }
             }
             catch
@@ -58,7 +61,7 @@ namespace TestTask2
 
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-
+            
 
             bool res = TryDataParsing(pathToFile, out _, out _);
 
