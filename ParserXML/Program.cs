@@ -17,7 +17,6 @@ namespace TestTask2
             fieldAddresObject = new Dictionary<string, byte>();
             listAddresObjectFIAS = new List<List<(byte, string)>>();
 
-
             try
             {
                 using (XmlReader reader = XmlReader.Create(new FileStream(pathToFile, FileMode.Open)))
@@ -45,6 +44,8 @@ namespace TestTask2
             {
                 return false;
             }
+
+            listAddresObjectFIAS.TrimExcess();
             return true;
         }
 
