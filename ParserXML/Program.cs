@@ -22,32 +22,23 @@ namespace TestTask2
             try
             {
                 using (XmlReader reader = XmlReader.Create(new FileStream(pathToFile, FileMode.Open)))
-                { 
-
+                {
                     while (reader.Read())
                     {
                         var addressObject = new List<(byte, string)>();
-                        switch (reader.NodeType)
+
+                        if (reader.NodeType == XmlNodeType.Element && reader.HasAttributes)
                         {
-                            case XmlNodeType.Element:
+                            while (reader.MoveToNextAttribute())
+                            {
+                                if (!fieldAddresObject.ContainsKey(reader.Name))
+                                    fieldAddresObject.Add(reader.Name, (byte)fieldAddresObject.Values.Count);
 
-                                if (reader.Name == "Object")
-                                {
-                                    if (reader.HasAttributes)
-                                    {
-                                        while (reader.MoveToNextAttribute())
-                                        {
-                                            if (!fieldAddresObject.ContainsKey(reader.Name))
-                                                fieldAddresObject.Add(reader.Name, (byte)fieldAddresObject.Values.Count);
+                                addressObject.Add((fieldAddresObject[reader.Name], reader.Value));
+                            }
 
-                                            addressObject.Add((fieldAddresObject[reader.Name], reader.Value));
-                                        }
-
-                                        listAddresObjectFIAS.Add(addressObject);
-                                        count = listAddresObjectFIAS.Count;
-                                    }
-                                }
-                            break;
+                            listAddresObjectFIAS.Add(addressObject);
+                            count = listAddresObjectFIAS.Count;
                         }
                     }
                 }
