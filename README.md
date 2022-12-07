@@ -2,8 +2,6 @@
 
 ### TryDataParsing - метод позволяющий парсить большие XML файлы, с учетом того, что мы не знаем названия атрибутов. 
 
-Возвращает true - если опирация прошла успешно и false если нет
-
 ```c#
 public static bool TryDataParsing(string pathToFile, out Dictionary<string, byte> fieldAddresObject,
                                                   out List<List<(byte, string)>> listAddresObjectFIAS)
